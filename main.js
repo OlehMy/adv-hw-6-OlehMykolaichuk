@@ -24,11 +24,14 @@ const students = [{
     }
 }];
 
+const someStudent = students[0]; // Enter a value for function #1-3;
+const someWord = 'Cursor'; // Enter a value for function #6;
+
 // 1) Створіть функцію, яка повертає список предметів для конкретного студента
 function getSubjects(students) {
-    return Object.keys(students.subjects).map(word => word[0].toUpperCase() + word.slice(1).replace('_', ' '));
+    return Object.keys(students.subjects).map(subject => subject[0].toUpperCase() + subject.slice(1).replace('_', ' '));
 }
-console.log(`List of subjects for ${students[0].name}`, getSubjects(students[0]));
+console.log(`List of subjects for ${someStudent.name}`, getSubjects(someStudent));
 
 // 2) Створіть функцію, яка поверне середню оцінку по усім предметам для переданого студента НЕ МАСИВА СТУДЕНТІВ. Оцінку округліть до 2ого знаку
 function getAverageMark(students) {
@@ -36,7 +39,7 @@ function getAverageMark(students) {
     const sumOfAllMarks = listOfAllMarks.reduce((x, y) => (+x) + (+y), 0);
     return (sumOfAllMarks / listOfAllMarks.length).toFixed(2);
 }
-console.log(`Average mark in all subjects for ${students[0].name}:`, getAverageMark(students[0]));
+console.log(`Average mark in all subjects for ${someStudent.name}:`, getAverageMark(someStudent));
 
 // 3) Створіть функцію, яка повертає інформацію загального виду по переданому студенту
 function getStudentInfo(students) {
@@ -47,7 +50,7 @@ function getStudentInfo(students) {
     }
     return studentInfo;
 }
-console.log(`General information about the ${students[1].name}`, getStudentInfo(students[1]));
+console.log(`General information about the ${someStudent.name}`, getStudentInfo(someStudent));
 
 // 4) Ствроіть функцію, яка повертає імена студентів у алфавітному порядку
 function getStudentsNames(students) {
@@ -56,14 +59,26 @@ function getStudentsNames(students) {
 console.log('Names of students in alphabetical order', getStudentsNames(students));
 
 // 5) Створіть функцію, яка повертає кращого студента зі списку по показнику середньої оцінки
-// function getBestStudent(students) {
-//     let averageMarkOfEachStudent = [];
-//     for (let index = 0; index < students.length; index++) {
-//         averageMarkOfEachStudent.push(getAverageMark(students[index]));
-//     }
-//     averageMarkOfEachStudent.sort((a, b) => (+b) - (+a));
-//     return averageMarkOfEachStudent[0];
-// }
-// console.log('The best student on the average mark:', getBestStudent(students));
+function getBestStudent(students) {
+    let averageMarkOfEachStudent = [];
+      students.map((student, index) => {
+      averageMarkOfEachStudent.push({
+        name: students[index].name,
+        averageMark: getAverageMark(students[index]),
+      });
+    });    
+    averageMarkOfEachStudent.sort((a, b) => (+b.averageMark) - (+a.averageMark));
+    return averageMarkOfEachStudent[0].name;
+}
+console.log('The best student on the average mark:', getBestStudent(students));
 
-// console.log(students);
+// 6) Створіть функцію, яка повертає обє'кт, в якому ключі це букви у слові, а значення – кількість їх повторень.
+function calculateWordLetters(someWord) {
+    const arrOfLettersOfWord = someWord.toLowerCase().split('');
+    const lettersOfWord = {};
+    for (const element of arrOfLettersOfWord) {
+        lettersOfWord[element] = (arrOfLettersOfWord.filter((letter) => element === letter)).length;
+    }
+    return lettersOfWord;
+}
+console.log(`Object with letters of the word '${someWord}'`, calculateWordLetters(someWord));
