@@ -35,9 +35,9 @@ console.log(`List of subjects for ${someStudent.name}`, getSubjects(someStudent)
 
 // 2) Створіть функцію, яка поверне середню оцінку по усім предметам для переданого студента НЕ МАСИВА СТУДЕНТІВ. Оцінку округліть до 2ого знаку
 function getAverageMark(students) {
-    const listOfAllMarks = Object.values(students.subjects).join(',').split(',');
-    const sumOfAllMarks = listOfAllMarks.reduce((x, y) => (+x) + (+y), 0);
-    return (sumOfAllMarks / listOfAllMarks.length).toFixed(2);
+    const listOfAllMarks = Object.values(students.subjects).flat();    
+    const sumOfAllMarks = listOfAllMarks.reduce((x, y) => x + y, 0);
+    return +((sumOfAllMarks / listOfAllMarks.length).toFixed(2));
 }
 console.log(`Average mark in all subjects for ${someStudent.name}:`, getAverageMark(someStudent));
 
